@@ -8,9 +8,9 @@ const deserialized = [
     id: 'argon2i',
     raw: 'v=19',
     params: {
-      m: '120',
-      t: '5000',
-      p: '2',
+      m: 120,
+      t: 5000,
+      p: 2,
       keyid: 'Hj5+dsK0',
       data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
     },

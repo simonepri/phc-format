@@ -80,11 +80,6 @@ test('should thow errors if trying to serialize with invalid arguments', async t
   t.regex(err.message, /params names must satisfy/);
 
   err = await t.throws(() =>
-    m.serialize({id: 'pbkdf2', params: {rounds: 1000}})
-  );
-  t.regex(err.message, /params values must be strings/);
-
-  err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds: '1000@'}})
   );
   t.regex(err.message, /params values must satisfy/);

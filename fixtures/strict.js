@@ -24,57 +24,75 @@ const serialized = [
 ];
 
 const deserialized = [
-  {id: 'argon2i', params: {m: '120', t: '5000', p: '2'}},
-  {id: 'argon2i', params: {m: '120', t: '4294967295', p: '2'}},
-  {id: 'argon2i', params: {m: '2040', t: '5000', p: '255'}},
-  {id: 'argon2i', params: {m: '120', t: '5000', p: '2', keyid: 'Hj5+dsK0'}},
-  {id: 'argon2i', params: {m: '120', t: '5000', p: '2', keyid: 'Hj5+dsK0ZQ'}},
-  {id: 'argon2i', params: {m: '120', t: '5000', p: '2', keyid: 'Hj5+dsK0ZQA'}},
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2', data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc'},
+    params: {m: 120, t: 5000, p: 2}
+  },
+  {
+    id: 'argon2i',
+    params: {m: 120, t: 4294967295, p: 2}
+  },
+  {
+    id: 'argon2i',
+    params: {m: 2040, t: 5000, p: 255}
+  },
+  {
+    id: 'argon2i',
+    params: {m: 120, t: 5000, p: 2, keyid: 'Hj5+dsK0'}
+  },
+  {
+    id: 'argon2i',
+    params: {m: 120, t: 5000, p: 2, keyid: 'Hj5+dsK0ZQ'}
+  },
+  {
+    id: 'argon2i',
+    params: {m: 120, t: 5000, p: 2, keyid: 'Hj5+dsK0ZQA'}
+  },
+  {
+    id: 'argon2i',
+    params: {m: 120, t: 5000, p: 2, data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc'},
   },
   {
     id: 'argon2i',
     params: {
-      m: '120',
-      t: '5000',
-      p: '2',
+      m: 120,
+      t: 5000,
+      p: 2,
       keyid: 'Hj5+dsK0',
       data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
     },
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2'},
+    params: {m: 120, t: 5000, p: 2},
     salt: Buffer.from('/LtFjH5rVL8', 'base64'),
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2'},
+    params: {m: 120, t: 5000, p: 2},
     salt: Buffer.from('4fXXG0spB92WPB1NitT8/OH0VKI', 'base64'),
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2'},
+    params: {m: 120, t: 5000, p: 2},
     salt: Buffer.from('BwUgJHHQaynE+a4nZrYRzOllGSjjxuxNXxyNRUtI6Dlw/zlbt6PzOL8Onfqs6TcG', 'base64'),
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2', keyid: 'Hj5+dsK0'},
+    params: {m: 120, t: 5000, p: 2, keyid: 'Hj5+dsK0'},
     salt: Buffer.from('4fXXG0spB92WPB1NitT8/OH0VKI', 'base64'),
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2', data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc'},
+    params: {m: 120, t: 5000, p: 2, data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc'},
     salt: Buffer.from('4fXXG0spB92WPB1NitT8/OH0VKI', 'base64'),
   },
   {
     id: 'argon2i',
     params: {
-      m: '120',
-      t: '5000',
-      p: '2',
+      m: 120,
+      t: 5000,
+      p: 2,
       keyid: 'Hj5+dsK0',
       data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
     },
@@ -82,28 +100,28 @@ const deserialized = [
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2'},
+    params: {m: 120, t: 5000, p: 2},
     salt: Buffer.from('4fXXG0spB92WPB1NitT8/OH0VKI', 'base64'),
     hash: Buffer.from('iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM', 'base64'),
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2', keyid: 'Hj5+dsK0'},
+    params: {m: 120, t: 5000, p: 2, keyid: 'Hj5+dsK0'},
     salt: Buffer.from('4fXXG0spB92WPB1NitT8/OH0VKI', 'base64'),
     hash: Buffer.from('iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM', 'base64'),
   },
   {
     id: 'argon2i',
-    params: {m: '120', t: '5000', p: '2', data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc'},
+    params: {m: 120, t: 5000, p: 2, data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc'},
     salt: Buffer.from('4fXXG0spB92WPB1NitT8/OH0VKI', 'base64'),
     hash: Buffer.from('iPBVuORECm5biUsjq33hn9/7BKqy9aPWKhFfK2haEsM', 'base64'),
   },
   {
     id: 'argon2i',
     params: {
-      m: '120',
-      t: '5000',
-      p: '2',
+      m: 120,
+      t: 5000,
+      p: 2,
       keyid: 'Hj5+dsK0',
       data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
     },
@@ -113,9 +131,9 @@ const deserialized = [
   {
     id: 'argon2i',
     params: {
-      m: '120',
-      t: '5000',
-      p: '2',
+      m: 120,
+      t: 5000,
+      p: 2,
       keyid: 'Hj5+dsK0',
       data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
     },
@@ -125,9 +143,9 @@ const deserialized = [
   {
     id: 'argon2i',
     params: {
-      m: '120',
-      t: '5000',
-      p: '2',
+      m: 120,
+      t: 5000,
+      p: 2,
       keyid: 'Hj5+dsK0',
       data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
     },

@@ -31,6 +31,9 @@ function objectValues(object) {
   if (typeof Object.values === 'function') return Object.values(object);
   return objectKeys(object).map(k => object[k]);
 }
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 
 /**
  * Generates a PHC string using the data provided.
@@ -70,14 +73,22 @@ function serialize(opts) {
     if (typeof opts.params !== 'object' || opts.params === null) {
       throw new TypeError('params must be an object');
     }
-    if (!objectKeys(opts.params).every(p => nameRegex.test(p))) {
+    const pk = objectKeys(opts.params);
+    if (!pk.every(p => nameRegex.test(p))) {
       throw new TypeError(`params names must satisfy ${nameRegex}`);
     }
-    const vs = objectValues(opts.params);
-    if (!vs.every(v => typeof v === 'string')) {
+    // Convert Numbers into Numeric Strings
+    pk.forEach(k => {
+      opts.params[k] =
+        typeof opts.params[k] === 'number'
+          ? opts.params[k].toString()
+          : opts.params[k];
+    });
+    const pv = objectValues(opts.params);
+    if (!pv.every(v => typeof v === 'string')) {
       throw new TypeError('params values must be strings');
     }
-    if (!vs.every(v => valueRegex.test(v))) {
+    if (!pv.every(v => valueRegex.test(v))) {
       throw new TypeError(`params values must satisfy ${valueRegex}`);
     }
     const strpar = objToKeyVal(opts.params);
@@ -176,10 +187,15 @@ function deserialize(phcstr, strict) {
       if (!objectKeys(params).every(p => nameRegex.test(p))) {
         throw new TypeError(`params names must satisfy ${nameRegex}`);
       }
-      const vs = objectValues(params);
-      if (!vs.every(v => valueRegex.test(v))) {
+      const pv = objectValues(params);
+      if (!pv.every(v => valueRegex.test(v))) {
         throw new TypeError(`params values must satisfy ${valueRegex}`);
       }
+      const pk = objectKeys(params);
+      // Convert Numeric Strings into Numbers
+      pk.forEach(k => {
+        params[k] = isNumeric(params[k]) ? parseFloat(params[k]) : params[k];
+      });
     }
   }
 
