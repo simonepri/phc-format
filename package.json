@@ -37,6 +37,9 @@
     "release": "np",
     "update": "npm-check -u"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "safe-buffer": "^5.1.1"
   },
