@@ -116,7 +116,9 @@ function serialize(opts) {
  * to parse MCF formatted strings.
  * @return {Object} The object containing the data parsed from the PHC string.
  */
-function deserialize(phcstr, strict = true) {
+function deserialize(phcstr, strict) {
+  strict = strict !== false;
+
   if (typeof phcstr !== 'string') {
     throw new TypeError('pchstr must be a string');
   }
