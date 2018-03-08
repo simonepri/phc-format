@@ -1,4 +1,4 @@
-/* eslint-disable max-params,capitalized-comments */
+/* eslint-disable max-params,capitalized-comments,complexity */
 'use strict';
 
 const Buffer = require('safe-buffer').Buffer;
@@ -37,8 +37,8 @@ function objectValues(object) {
  * @param  {Object} opts Object that holds the data needed to generate the PHC
  * string.
  * @param  {string} opts.id Symbolic name for the function.
- * @param  {string} [opts.raw] Additinal raw data added between id and params.
- * It's here only to support argon2 v parameter.
+ * @param  {string} [opts.raw] Additional raw data added after the identifier.
+ * It's here to support argon2 v parameter and to generate MCF formatted strings.
  * @param  {Object} [opts.params] Parameters of the function.
  * @param  {Buffer} [opts.salt] The salt as a binary buffer.
  * @param  {Buffer} [opts.hash] The hash as a binary buffer.
@@ -109,18 +109,32 @@ function serialize(opts) {
 /**
  * Parses data from a PHC string.
  * @param  {string} phcstr A PHC string to parse.
+ * @param  {boolean} strict If false does not throw an error if there is
+ * one filed not unrecognized. The content of the unrecognized filed will be
+ * stored in the raw property of the output object. This is useful to parse
+ * out of specs parameters like the 'v' present in the argon2 hash format or
+ * to parse MCF formatted strings.
  * @return {Object} The object containing the data parsed from the PHC string.
  */
-function deserialize(phcstr) {
+function deserialize(phcstr, strict = true) {
   if (typeof phcstr !== 'string') {
     throw new TypeError('pchstr must be a string');
   }
   const fields = phcstr.split('$');
+
+  // Parse Fields
   if (fields.length === 1) {
     throw new TypeError('pchstr must contain at least one $ char');
   }
   // Remove first empty $
   fields.shift();
+  let maxf = 5;
+  if (strict) maxf--;
+  if (fields.length > maxf) {
+    throw new TypeError(
+      `pchstr contains too many fileds: ${fields.length}/${maxf}`
+    );
+  }
 
   // Parse Identifier
   const id = fields.shift();
@@ -143,16 +157,44 @@ function deserialize(phcstr) {
   }
 
   // Parse Parameters
-  let params = {};
+  let params;
   if (fields.length > 0) {
-    params = keyValtoObj(fields.pop());
-    if (!objectKeys(params).every(p => nameRegex.test(p))) {
-      throw new TypeError(`params names must satisfy ${nameRegex}`);
+    const parstr = fields.pop();
+    let isKeyVal = false;
+    try {
+      params = keyValtoObj(parstr);
+      isKeyVal = true;
+    } catch (err) {
+      if (strict) {
+        throw err;
+      }
+      fields.push(parstr);
     }
-    const vs = objectValues(params);
-    if (!vs.every(v => valueRegex.test(v))) {
-      throw new TypeError(`params values must satisfy ${valueRegex}`);
+    if (isKeyVal) {
+      if (!objectKeys(params).every(p => nameRegex.test(p))) {
+        throw new TypeError(`params names must satisfy ${nameRegex}`);
+      }
+      const vs = objectValues(params);
+      if (!vs.every(v => valueRegex.test(v))) {
+        throw new TypeError(`params values must satisfy ${valueRegex}`);
+      }
     }
+  }
+
+  // Parse Raw Data if not in strict mode
+  let raw;
+  if (fields.length > 0) {
+    if (strict) {
+      throw new TypeError(
+        `pchstr contains unrecognized fileds: ${fields.length}/0`
+      );
+    }
+    if (fields.length !== 1) {
+      throw new TypeError(
+        `pchstr contains too many unrecognized fileds: ${fields.length}/1`
+      );
+    }
+    raw = fields.pop();
   }
 
   // Build the output object
@@ -160,8 +202,7 @@ function deserialize(phcstr) {
   if (params) phcobj.params = params;
   if (salt) phcobj.salt = salt;
   if (hash) phcobj.hash = hash;
-  if (hash) phcobj.hash = hash;
-  if (fields.length > 0) phcobj.raw = fields.join('$');
+  if (raw) phcobj.raw = raw;
 
   return phcobj;
 }

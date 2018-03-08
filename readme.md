@@ -83,25 +83,75 @@ npm install --save @phc/format
 const phc = require('@phc/format');
 
 const phcobj = {
-  id: 'argon2i',
-  raw: 'v=19',
-  params: {
-    m: '120',
-    t: '5000',
-    p: '2',
-    keyid: 'Hj5+dsK0',
-    data: 'sRlHhRmKUGzdOmXn01XmXygd5Kc',
-  },
-  salt: Buffer.from('dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc', 'base64'),
-  hash: Buffer.from('J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g', 'base64'),
+  id: 'pbkdf2-sha256',
+  params: {i: '6400'},
+  salt: Buffer.from('0ZrzXitFSGltTQnBWOsdAw', 'base64'),
+  hash: Buffer.from('Y11AchqV4b0sUisdZd0Xr97KWoymNE0LNNrnEgY4H9M', 'base64'),
 };
 
-const phcstr = "$argon2i$v=19$m=120,t=5000,p=2,keyid=Hj5+dsK0,data=sRlHhRmKUGzdOmXn01XmXygd5Kc$iHSDPHzUhPzK7rCcJgOFfg$J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g";
+const phcstr = "$pbkdf2-sha256$i=6400$0ZrzXitFSGltTQnBWOsdAw$Y11AchqV4b0sUisdZd0Xr97KWoymNE0LNNrnEgY4H9M";
 
 phc.serialize(phcobj);
 // => phcstr
 
 phc.deserialize(phcstr);
+// => phcobj
+```
+
+
+Using the `raw` and `strict` parameters you can even serialize/deserialize
+PHC strings that does not strictly adhere to the 'standard', like the one
+used by [argon2](https://github.com/P-H-C/phc-winner-argon2/issues/157)
+
+```js
+const phc = require('@phc/format');
+
+const phcobj = {
+  id: 'argon2i',
+  raw: 'v=19', <- Note the v parameter
+  params: {
+    m: '120',
+    t: '5000',
+    p: '2'
+  },
+  salt: Buffer.from('iHSDPHzUhPzK7rCcJgOFfg', 'base64'),
+  hash: Buffer.from('J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g', 'base64'),
+};
+
+const phcstr = "$argon2i$v=19$m=120,t=5000,p=2$iHSDPHzUhPzK7rCcJgOFfg$J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g"; <- Note the v parameter
+
+phc.serialize(phcobj);
+// => phcstr
+
+phc.deserialize(phcstr);
+// => throws an error since there are more than 4 fields (a field is one $)
+
+phc.deserialize(phcstr, false);
+// => phcobj
+```
+
+With the same philosophy you can even serialize/deserialize MCF formatted strings.
+
+```js
+const phc = require('@phc/format');
+
+const phcobj = {
+  id: 'pbkdf2-sha256',
+  raw: '6400',
+  salt: Buffer.from('0ZrzXitFSGltTQnBWOsdAw', 'base64'),
+  hash: Buffer.from('Y11AchqV4b0sUisdZd0Xr97KWoymNE0LNNrnEgY4H9M', 'base64'),
+};
+
+const phcstr = "$pbkdf2-sha256$6400$0ZrzXitFSGltTQnBWOsdAw$Y11AchqV4b0sUisdZd0Xr97KWoymNE0LNNrnEgY4H9M";
+
+phc.serialize(phcobj);
+// => phcstr
+
+phc.deserialize(phcstr);
+// => throws an error since the second field (a field is one $) is not a valid
+// params string
+
+phc.deserialize(phcstr, false);
 // => phcobj
 ```
 
@@ -111,7 +161,7 @@ phc.deserialize(phcstr);
 <dt><a href="#serialize">serialize(opts)</a> ⇒ <code>string</code></dt>
 <dd><p>Generates a PHC string using the data provided.</p>
 </dd>
-<dt><a href="#deserialize">deserialize(phcstr)</a> ⇒ <code>Object</code></dt>
+<dt><a href="#deserialize">deserialize(phcstr, strict)</a> ⇒ <code>Object</code></dt>
 <dd><p>Parses data from a PHC string.</p>
 </dd>
 </dl>
@@ -128,22 +178,23 @@ Generates a PHC string using the data provided.
 | --- | --- | --- |
 | opts | <code>Object</code> | Object that holds the data needed to generate the PHC string. |
 | opts.id | <code>string</code> | Symbolic name for the function. |
-| [opts.raw] | <code>string</code> | Additinal raw data added between id and params. It's here only to support argon2 v parameter. |
+| [opts.raw] | <code>string</code> | Additional raw data added after the identifier. It's here to support argon2 v parameter and to generate MCF formatted strings. |
 | [opts.params] | <code>Object</code> | Parameters of the function. |
 | [opts.salt] | <code>Buffer</code> | The salt as a binary buffer. |
 | [opts.hash] | <code>Buffer</code> | The hash as a binary buffer. |
 
 <a name="deserialize"></a>
 
-## deserialize(phcstr) ⇒ <code>Object</code>
+## deserialize(phcstr, strict) ⇒ <code>Object</code>
 Parses data from a PHC string.
 
 **Kind**: global function  
 **Returns**: <code>Object</code> - The object containing the data parsed from the PHC string.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| phcstr | <code>string</code> | A PHC string to parse. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| phcstr | <code>string</code> |  | A PHC string to parse. |
+| strict | <code>boolean</code> | <code>true</code> | If false does not throw an error if there is one filed not unrecognized. The content of the unrecognized filed will be stored in the raw property of the output object. This is useful to parse out of specs parameters like the 'v' present in the argon2 hash format or to parse MCF formatted strings. |
 
 ## Contributing
 Contributions are REALLY welcome and if you find a security flaw in this code, PLEASE [report it][new issue].  

@@ -1,18 +1,43 @@
 import test from 'ava';
 
-import data from './fixtures/data';
+import strictData from './fixtures/strict';
+import nostrictData from './fixtures/nostrict';
 
 import m from '.';
 
 test('should deserialize correct phc strings', t => {
-  data.serialized.forEach((g, i) => {
-    t.deepEqual(m.deserialize(data.serialized[i]), data.deserialized[i]);
+  strictData.serialized.forEach((g, i) => {
+    t.deepEqual(
+      m.deserialize(strictData.serialized[i]),
+      strictData.deserialized[i]
+    );
   });
 });
 
 test('should serialize correct phc objects', t => {
-  data.deserialized.forEach((g, i) => {
-    t.deepEqual(m.serialize(data.deserialized[i]), data.serialized[i]);
+  strictData.deserialized.forEach((g, i) => {
+    t.deepEqual(
+      m.serialize(strictData.deserialized[i]),
+      strictData.serialized[i]
+    );
+  });
+});
+
+test('should deserialize phc strings with one unrecognized field if strict is false', t => {
+  nostrictData.serialized.forEach((g, i) => {
+    t.deepEqual(
+      m.deserialize(nostrictData.serialized[i], false),
+      nostrictData.deserialized[i]
+    );
+  });
+});
+
+test('should serialize phc strings with one unrecognized field if strict is false', t => {
+  nostrictData.deserialized.forEach((g, i) => {
+    t.deepEqual(
+      m.serialize(nostrictData.deserialized[i], false),
+      nostrictData.serialized[i]
+    );
   });
 });
 
