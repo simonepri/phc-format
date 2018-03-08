@@ -1,0 +1,63 @@
+{
+  "name": "@phc/format",
+  "version": "0.0.0",
+  "description": "PHC string format serializer/deserializer",
+  "license": "MIT",
+  "homepage": "https://github.com/simonepri/phc-format#readme",
+  "repository": "github:simonepri/phc-format",
+  "bugs": {
+    "url": "https://github.com/simonepri/phc-format/issues",
+    "email": "simonepri@outlook.com"
+  },
+  "author": "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)",
+  "contributors": [
+    "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)"
+  ],
+  "keywords": [
+    "mfc",
+    "phc",
+    "modular",
+    "crypt",
+    "passwords",
+    "hashing",
+    "competition",
+    "password",
+    "standard",
+    "crypto"
+  ],
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo &&nyc ava",
+    "release": "np",
+    "update": "npm-check -u"
+  },
+  "dependencies": {
+    "safe-buffer": "^5.1.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "np": "*",
+    "npm-check": "*",
+    "nyc": "*",
+    "xo": "*"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "nyc": {
+    "reporter": [
+      "lcovonly",
+      "text"
+    ]
+  },
+  "xo": {
+    "prettier": true,
+    "space": true
+  }
+}
