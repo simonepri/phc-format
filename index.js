@@ -9,7 +9,7 @@ const valueRegex = /^[a-zA-Z0-9/+.-]+$/;
 const b64Regex = /^[a-zA-Z0-9/+.-]+$/;
 
 function objToKeyVal(obj) {
-  return Object.keys(obj)
+  return objectKeys(obj)
     .map(k => [k, obj[k]].join('='))
     .join(',');
 }
@@ -23,6 +23,13 @@ function keyValtoObj(str) {
     obj[pss.shift()] = pss.join('=');
   });
   return obj;
+}
+function objectKeys(object) {
+  return Object.keys(object);
+}
+function objectValues(object) {
+  if (typeof Object.values === 'function') return Object.values(object);
+  return objectKeys(object).map(k => object[k]);
 }
 
 /**
@@ -63,10 +70,10 @@ function serialize(opts) {
     if (typeof opts.params !== 'object' || opts.params === null) {
       throw new TypeError('params must be an object');
     }
-    if (!Object.keys(opts.params).every(p => nameRegex.test(p))) {
+    if (!objectKeys(opts.params).every(p => nameRegex.test(p))) {
       throw new TypeError(`params names must satisfy ${nameRegex}`);
     }
-    const vs = Object.values(opts.params);
+    const vs = objectValues(opts.params);
     if (!vs.every(v => typeof v === 'string')) {
       throw new TypeError('params values must be strings');
     }
@@ -139,10 +146,10 @@ function deserialize(phcstr) {
   let params = {};
   if (fields.length > 0) {
     params = keyValtoObj(fields.pop());
-    if (!Object.keys(params).every(p => nameRegex.test(p))) {
+    if (!objectKeys(params).every(p => nameRegex.test(p))) {
       throw new TypeError(`params names must satisfy ${nameRegex}`);
     }
-    const vs = Object.values(params);
+    const vs = objectValues(params);
     if (!vs.every(v => valueRegex.test(v))) {
       throw new TypeError(`params values must satisfy ${valueRegex}`);
     }
