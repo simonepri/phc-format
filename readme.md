@@ -64,7 +64,12 @@
 </p>
 
 ## Motivation
-The [PHC String Format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md) is an attempt to specify a common hash string format that’s a restricted & well defined subset of the Modular Crypt Format. New hashes are strongly encouraged to adhere to the PHC specification, rather than the much looser [Modular Crypt Format](https://github.com/ademarre/binary-mcf).
+The [PHC String Format][specs:phc] is an attempt to specify a common hash string format that’s a restricted & well defined subset of the Modular Crypt Format. New hashes are strongly encouraged to adhere to the PHC specification, rather than the much looser [Modular Crypt Format][specs:mcf].
+
+Do you believe that this is *useful*?
+Has it *saved you time*?
+Or maybe you simply *like it*?  
+If so, [show your appreciation with a Star ⭐️][start].
 
 ## Install
 
@@ -141,13 +146,28 @@ Parses data from a PHC string.
 | phcstr | <code>string</code> | A PHC string to parse. |
 
 ## Contributing
-Contributions are REALLY welcome and if you find a security flaw in this code, PLEASE [report it](https://github.com/simonepri/phc-format/issues/new).  
-Please check the [contributing guidelines](.github/contributing.md) for more details. Thanks!
+Contributions are REALLY welcome and if you find a security flaw in this code, PLEASE [report it][new issue].  
+Please check the [contributing guidelines][contributing] for more details. Thanks!
 
 ## Authors
-- **Simone Primarosa** -  *Follow* me on *Github* ([:octocat:@simonepri](https://github.com/simonepri)) and on  *Twitter* ([🐦@simonepri](http://twitter.com/intent/user?screen_name=simoneprimarosa))
+- **Simone Primarosa** -  *Follow* me on *Github* ([:octocat:@simonepri][github:simonepri]) and on  *Twitter* ([🐦@simonepri][twitter:simoneprimarosa])
 
-See also the list of [contributors](https://github.com/simonepri/phc-format/contributors) who participated in this project.
+See also the list of [contributors][contributors] who participated in this project.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/simonepri/phc-format/LICENSE) file for details.
+This project is licensed under the MIT License - see the [license][license] file for details.
+
+
+<!-- Links -->
+[start]: https://github.com/simonepri/phc-format#start-of-content
+[new issue]: https://github.com/simonepri/phc-format/issues/new
+[contributors]: https://github.com/simonepri/phc-format/contributors
+
+[license]: https://github.com/simonepri/phc-format/tree/master/license
+[contributing]: https://github.com/simonepri/phc-format/tree/master/.github/contributing.md
+
+[github:simonepri]: https://github.com/simonepri
+[twitter:simoneprimarosa]: http://twitter.com/intent/user?screen_name=simoneprimarosa
+
+[specs:mcf]: https://github.com/ademarre/binary-mcf
+[specs:phc]: https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md
