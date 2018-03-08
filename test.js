@@ -702,16 +702,16 @@ test('should thow errors if trying to deserialize an invalid phc string', async 
   t.is(err.message, 'pchstr must contain at least one $ char');
 
   err = await t.throws(() => m.deserialize('$i_n_v_a_l_i_d'));
-  t.not(err.message.indexOf('id must satisfy'), -1);
+  t.regex(err.message, /id must satisfy/);
 
   err = await t.throws(() => m.deserialize('$pbkdf2$rounds_=1000'));
-  t.not(err.message.indexOf('params names must satisfy'), -1);
+  t.regex(err.message, /params names must satisfy/);
 
   err = await t.throws(() => m.deserialize('$pbkdf2$rounds=1000@'));
-  t.not(err.message.indexOf('params values must satisfy'), -1);
+  t.regex(err.message, /params values must satisfy/);
 
   err = await t.throws(() => m.deserialize('$pbkdf2$rounds:1000'));
-  t.not(err.message.indexOf('params must be in the format name=value'), -1);
+  t.regex(err.message, /params must be in the format name=value/);
 });
 
 test('should thow errors if trying to serialize with invalid arguments', async t => {
@@ -722,30 +722,30 @@ test('should thow errors if trying to serialize with invalid arguments', async t
   t.is(err.message, 'id must be a string');
 
   err = await t.throws(() => m.serialize({id: 'i_n_v_a_l_i_d'}));
-  t.not(err.message.indexOf('id must satisfy'), -1);
+  t.regex(err.message, /id must satisfy/);
 
   err = await t.throws(() => m.serialize({id: 'pbkdf2', params: null}));
-  t.not(err.message.indexOf('params must be an object'), -1);
+  t.regex(err.message, /params must be an object/);
 
   err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds_: '1000'}})
   );
-  t.not(err.message.indexOf('params names must satisfy'), -1);
+  t.regex(err.message, /params names must satisfy/);
 
   err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds: 1000}})
   );
-  t.not(err.message.indexOf('params values must be strings'), -1);
+  t.regex(err.message, /params values must be strings/);
 
   err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds: '1000@'}})
   );
-  t.not(err.message.indexOf('params values must satisfy'), -1);
+  t.regex(err.message, /params values must satisfy/);
 
   err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds: '1000'}, salt: 'string'})
   );
-  t.not(err.message.indexOf('salt must be a Buffer'), -1);
+  t.regex(err.message, /salt must be a Buffer/);
 
   err = await t.throws(() =>
     m.serialize({
@@ -755,5 +755,5 @@ test('should thow errors if trying to serialize with invalid arguments', async t
       hash: 'string',
     })
   );
-  t.not(err.message.indexOf('hash must be a Buffer'), -1);
+  t.regex(err.message, /hash must be a Buffer/);
 });
