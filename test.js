@@ -43,10 +43,16 @@ test('should serialize phc strings with one unrecognized field if strict is fals
 
 test('should thow errors if trying to deserialize an invalid phc string', async t => {
   let err = await t.throws(() => m.deserialize(null));
-  t.is(err.message, 'pchstr must be a string');
+  t.is(err.message, 'pchstr must be a non-empty string');
+
+  err = await t.throws(() => m.deserialize('a$invalid'));
+  t.is(err.message, 'pchstr must contain a $ as first char');
+
+  err = await t.throws(() => m.deserialize('$b$c$d$e$f'));
+  t.is(err.message, 'pchstr contains too many fileds: 5/4');
 
   err = await t.throws(() => m.deserialize('invalid'));
-  t.is(err.message, 'pchstr must contain at least one $ char');
+  t.is(err.message, 'pchstr must contain a $ as first char');
 
   err = await t.throws(() => m.deserialize('$i_n_v_a_l_i_d'));
   t.regex(err.message, /id must satisfy/);
@@ -59,6 +65,19 @@ test('should thow errors if trying to deserialize an invalid phc string', async 
 
   err = await t.throws(() => m.deserialize('$pbkdf2$rounds:1000'));
   t.regex(err.message, /params must be in the format name=value/);
+
+  err = await t.throws(() =>
+    m.deserialize('$argon2i$unrecognized$m=120,t=5000,p=2$EkCWX6pSTqWruiR0')
+  );
+  t.is(err.message, 'pchstr contains unrecognized fileds: 1/0');
+
+  err = await t.throws(() =>
+    m.deserialize(
+      '$argon2i$unrecognized$v=19$m=120,t=5000,p=2$EkCWX6pSTqWruiR0',
+      false
+    )
+  );
+  t.is(err.message, 'pchstr contains too many unrecognized fileds: 2/1');
 });
 
 test('should thow errors if trying to serialize with invalid arguments', async t => {
@@ -72,7 +91,10 @@ test('should thow errors if trying to serialize with invalid arguments', async t
   t.regex(err.message, /id must satisfy/);
 
   err = await t.throws(() => m.serialize({id: 'pbkdf2', params: null}));
-  t.regex(err.message, /params must be an object/);
+  t.is(err.message, 'params must be an object');
+
+  err = await t.throws(() => m.serialize({id: 'pbkdf2', params: {i: {}}}));
+  t.is(err.message, 'params values must be strings');
 
   err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds_: '1000'}})
@@ -87,7 +109,7 @@ test('should thow errors if trying to serialize with invalid arguments', async t
   err = await t.throws(() =>
     m.serialize({id: 'pbkdf2', params: {rounds: '1000'}, salt: 'string'})
   );
-  t.regex(err.message, /salt must be a Buffer/);
+  t.is(err.message, 'salt must be a Buffer');
 
   err = await t.throws(() =>
     m.serialize({
@@ -97,5 +119,5 @@ test('should thow errors if trying to serialize with invalid arguments', async t
       hash: 'string',
     })
   );
-  t.regex(err.message, /hash must be a Buffer/);
+  t.is(err.message, 'hash must be a Buffer');
 });
