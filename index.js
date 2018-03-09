@@ -25,10 +25,13 @@ function keyValtoObj(str) {
   return obj;
 }
 function objectKeys(object) {
+  /* istanbul ignore next */
   return Object.keys(object);
 }
 function objectValues(object) {
+  /* istanbul ignore next */
   if (typeof Object.values === 'function') return Object.values(object);
+  /* istanbul ignore next */
   return objectKeys(object).map(k => object[k]);
 }
 function isNumeric(n) {
@@ -130,17 +133,17 @@ function serialize(opts) {
 function deserialize(phcstr, strict) {
   strict = strict !== false;
 
-  if (typeof phcstr !== 'string') {
-    throw new TypeError('pchstr must be a string');
+  if (typeof phcstr !== 'string' || phcstr === '') {
+    throw new TypeError('pchstr must be a non-empty string');
+  }
+  if (phcstr[0] !== '$') {
+    throw new TypeError('pchstr must contain a $ as first char');
   }
   const fields = phcstr.split('$');
-
-  // Parse Fields
-  if (fields.length === 1) {
-    throw new TypeError('pchstr must contain at least one $ char');
-  }
   // Remove first empty $
   fields.shift();
+
+  // Parse Fields
   let maxf = 5;
   if (strict) maxf--;
   if (fields.length > maxf) {
