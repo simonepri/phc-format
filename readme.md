@@ -161,18 +161,19 @@ phc.deserialize(phcstr, false);
 
 ## API
 
+#### TOC
 <dl>
 <dt><a href="#serialize">serialize(opts)</a> ⇒ <code>string</code></dt>
 <dd><p>Generates a PHC string using the data provided.</p>
 </dd>
-<dt><a href="#deserialize">deserialize(phcstr, strict)</a> ⇒ <code>Object</code></dt>
+<dt><a href="#deserialize">deserialize(phcstr, [strict])</a> ⇒ <code>Object</code></dt>
 <dd><p>Parses data from a PHC string.</p>
 </dd>
 </dl>
 
 <a name="serialize"></a>
 
-## serialize(opts) ⇒ <code>string</code>
+### serialize(opts) ⇒ <code>string</code>
 Generates a PHC string using the data provided.
 
 **Kind**: global function  
@@ -189,7 +190,7 @@ Generates a PHC string using the data provided.
 
 <a name="deserialize"></a>
 
-## deserialize(phcstr, strict) ⇒ <code>Object</code>
+### deserialize(phcstr, [strict]) ⇒ <code>Object</code>
 Parses data from a PHC string.
 
 **Kind**: global function  
@@ -198,7 +199,8 @@ Parses data from a PHC string.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | phcstr | <code>string</code> |  | A PHC string to parse. |
-| strict | <code>boolean</code> | <code>true</code> | If false does not throw an error if there is one filed not unrecognized. The content of the unrecognized filed will be stored in the raw property of the output object. This is useful to parse out of specs parameters like the 'v' present in the argon2 hash format or to parse MCF formatted strings. |
+| [strict] | <code>boolean</code> | <code>true</code> | If false does not throw an error if there is one filed not unrecognized. The content of the unrecognized filed will be stored in the raw property of the output object. This is useful to parse out of specs parameters like the 'v' present in the argon2 hash format or to parse MCF formatted strings. |
+
 
 ## Contributing
 Contributions are REALLY welcome and if you find a security flaw in this code, PLEASE [report it][new issue].  

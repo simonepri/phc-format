@@ -123,7 +123,7 @@ function serialize(opts) {
 /**
  * Parses data from a PHC string.
  * @param  {string} phcstr A PHC string to parse.
- * @param  {boolean} strict If false does not throw an error if there is
+ * @param  {boolean} [strict=true] If false does not throw an error if there is
  * one filed not unrecognized. The content of the unrecognized filed will be
  * stored in the raw property of the output object. This is useful to parse
  * out of specs parameters like the 'v' present in the argon2 hash format or
