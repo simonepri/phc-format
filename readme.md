@@ -37,19 +37,23 @@
   <a href="https://github.com/istanbuljs/nyc">
     <img src="https://img.shields.io/badge/test_coverage-NYC-fec606.svg" alt="Istanbul Test Coverage used" />
   </a>
-  <!-- Release System - np -->
+  <!-- Init - ni -->
+  <a href="https://github.com/simonepri/ni">
+    <img src="https://img.shields.io/badge/initialized_with-ni-e74c3c.svg" alt="NI Scaffolding System used" />
+  </a>
+  <!-- Release - np -->
   <a href="https://github.com/sindresorhus/np">
-    <img src="https://img.shields.io/badge/release_system-np-6c8784.svg" alt="NP Release System used" />
+    <img src="https://img.shields.io/badge/released_with-np-6c8784.svg" alt="NP Release System used" />
   </a>
 
   <br/>
 
   <!-- Version - npm -->
-  <a href="https://www.npmjs.com/package/phc-format">
-    <img src="https://img.shields.io/npm/v/phc-format.svg" alt="Latest version on npm" />
+  <a href="https://www.npmjs.com/package/@phc/format">
+    <img src="https://img.shields.io/npm/v/@phc/format.svg" alt="Latest version on npm" />
   </a>
   <!-- License - MIT -->
-  <a href="https://github.com/simonepri/phc-format#license">
+  <a href="https://github.com/simonepri/phc-format/tree/master/license">
     <img src="https://img.shields.io/github/license/simonepri/phc-format.svg" alt="Project license" />
   </a>
 </p>
