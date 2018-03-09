@@ -84,7 +84,7 @@ const phc = require('@phc/format');
 
 const phcobj = {
   id: 'pbkdf2-sha256',
-  params: {i: '6400'},
+  params: {i: 6400},
   salt: Buffer.from('0ZrzXitFSGltTQnBWOsdAw', 'base64'),
   hash: Buffer.from('Y11AchqV4b0sUisdZd0Xr97KWoymNE0LNNrnEgY4H9M', 'base64'),
 };
@@ -108,17 +108,17 @@ const phc = require('@phc/format');
 
 const phcobj = {
   id: 'argon2i',
-  raw: 'v=19', <- Note the v parameter
+  raw: 'v=19', ← Note the v parameter
   params: {
-    m: '120',
-    t: '5000',
-    p: '2'
+    m: 120,
+    t: 5000,
+    p: 2
   },
   salt: Buffer.from('iHSDPHzUhPzK7rCcJgOFfg', 'base64'),
   hash: Buffer.from('J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g', 'base64'),
 };
-
-const phcstr = "$argon2i$v=19$m=120,t=5000,p=2$iHSDPHzUhPzK7rCcJgOFfg$J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g"; <- Note the v parameter
+                         ↓ Note the v parameter
+const phcstr = "$argon2i$v=19$m=120,t=5000,p=2$iHSDPHzUhPzK7rCcJgOFfg$J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g";
 
 phc.serialize(phcobj);
 // => phcstr
