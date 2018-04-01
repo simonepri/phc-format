@@ -151,9 +151,8 @@ const deserialized = [
     },
     salt: Buffer.from('iHSDPHzUhPzK7rCcJgOFfg', 'base64'),
     hash: Buffer.from('J4moa2MM0/6uf3HbY2Tf5Fux8JIBTwIhmhxGRbsY14qhTltQt+Vw3b7tcJNEbk8ium8AQfZeD4tabCnNqfkD1g', 'base64'),
-  },
+  }
 ];
-
 module.exports = {
   serialized,
   deserialized,
