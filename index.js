@@ -6,7 +6,7 @@ const Buffer = require('safe-buffer').Buffer;
 const idRegex = /^[a-z0-9-]{1,32}$/;
 const nameRegex = /^[a-z0-9-]{1,32}$/;
 const valueRegex = /^[a-zA-Z0-9/+.-]+$/;
-const b64Regex = /^[a-zA-Z0-9/+.-]+$/;
+const b64Regex = /^([a-zA-Z0-9/+.-]+|)$/;
 
 function objToKeyVal(obj) {
   return objectKeys(obj)
