@@ -70,11 +70,6 @@
 ## Motivation
 The [PHC String Format][specs:phc] is an attempt to specify a common hash string format that’s a restricted & well defined subset of the Modular Crypt Format. New hashes are strongly encouraged to adhere to the PHC specification, rather than the much looser [Modular Crypt Format][specs:mcf].
 
-Do you believe that this is *useful*?
-Has it *saved you time*?
-Or maybe you simply *like it*?  
-If so, [show your appreciation with a Star ⭐️][start].
-
 ## Install
 
 ```bash
@@ -174,7 +169,7 @@ Contributions are REALLY welcome and if you find a security flaw in this code, P
 Please check the [contributing guidelines][contributing] for more details. Thanks!
 
 ## Authors
-- **Simone Primarosa** -  *Follow* me on *Github* ([:octocat:@simonepri][github:simonepri]) and on  *Twitter* ([🐦@simonepri][twitter:simoneprimarosa])
+- **Simone Primarosa** - *Github* ([@simonepri][github:simonepri]) • *Twitter* ([@simoneprimarosa][twitter:simoneprimarosa])
 
 See also the list of [contributors][contributors] who participated in this project.
 
