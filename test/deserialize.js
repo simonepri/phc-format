@@ -1,7 +1,6 @@
 import test from 'ava';
 
 import strictData from './fixtures/strict';
-import nostrictData from './fixtures/nostrict';
 
 import m from '..';
 
@@ -10,15 +9,6 @@ test('should deserialize correct phc strings', t => {
     t.deepEqual(
       m.deserialize(strictData.serialized[i]),
       strictData.deserialized[i]
-    );
-  });
-});
-
-test('should deserialize phc strings with one unrecognized field if strict is false', t => {
-  nostrictData.serialized.forEach((g, i) => {
-    t.deepEqual(
-      m.deserialize(nostrictData.serialized[i], false),
-      nostrictData.deserialized[i]
     );
   });
 });
@@ -51,13 +41,19 @@ test('should thow errors if trying to deserialize an invalid phc string', async 
   err = await t.throws(() =>
     m.deserialize('$argon2i$unrecognized$m=120,t=5000,p=2$EkCWX6pSTqWruiR0')
   );
-  t.is(err.message, 'pchstr contains unrecognized fileds: 1/0');
+  t.regex(err.message, /pchstr contains unrecognized fileds/);
 
   err = await t.throws(() =>
     m.deserialize(
-      '$argon2i$unrecognized$v=19$m=120,t=5000,p=2$EkCWX6pSTqWruiR0',
-      false
+      '$argon2i$unrecognized$v=19$m=120,t=5000,p=2$EkCWX6pSTqWruiR0'
     )
   );
-  t.is(err.message, 'pchstr contains too many unrecognized fileds: 2/1');
+  t.is(err.message, 'pchstr contains too many fileds: 5/4');
+
+  err = await t.throws(() =>
+    m.deserialize(
+      '$argon2i$v=19$unrecognized$m=120,t=5000,p=2$EkCWX6pSTqWruiR0'
+    )
+  );
+  t.regex(err.message, /pchstr contains unrecognized fileds/);
 });

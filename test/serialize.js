@@ -1,7 +1,6 @@
 import test from 'ava';
 
 import strictData from './fixtures/strict';
-import nostrictData from './fixtures/nostrict';
 
 import m from '..';
 
@@ -10,15 +9,6 @@ test('should serialize correct phc objects', t => {
     t.deepEqual(
       m.serialize(strictData.deserialized[i]),
       strictData.serialized[i]
-    );
-  });
-});
-
-test('should serialize phc strings with one unrecognized field if strict is false', t => {
-  nostrictData.deserialized.forEach((g, i) => {
-    t.deepEqual(
-      m.serialize(nostrictData.deserialized[i], false),
-      nostrictData.serialized[i]
     );
   });
 });
