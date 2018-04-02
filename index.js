@@ -7,7 +7,7 @@ const idRegex = /^[a-z0-9-]{1,32}$/;
 const nameRegex = /^[a-z0-9-]{1,32}$/;
 const valueRegex = /^[a-zA-Z0-9/+.-]+$/;
 const b64Regex = /^([a-zA-Z0-9/+.-]+|)$/;
-const degimalRegex = /(?<=\s|^)[-+]?\d+(?=\s|$)/;
+const decimalRegex = /^((-)?[1-9]\d*|0)$/;
 const versionRegex = /^v=(\d+)$/;
 
 function objToKeyVal(obj) {
@@ -190,7 +190,7 @@ function deserialize(phcstr) {
     const pk = objectKeys(params);
     // Convert Decimal Strings into Numbers
     pk.forEach(k => {
-      params[k] = degimalRegex.test(params[k])
+      params[k] = decimalRegex.test(params[k])
         ? parseInt(params[k], 10)
         : params[k];
     });
