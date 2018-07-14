@@ -42,6 +42,9 @@ test('should thow errors if trying to serialize with invalid arguments', async t
   );
   t.is(err.message, 'salt must be a Buffer');
 
+  err = await t.throws(() => m.serialize({id: 'argon2id', version: -10}));
+  t.is(err.message, 'version must be a positive integer number');
+
   err = await t.throws(() =>
     m.serialize({
       id: 'pbkdf2',
