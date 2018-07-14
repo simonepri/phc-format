@@ -84,12 +84,13 @@ function serialize(opts) {
     if (!pk.every(p => nameRegex.test(p))) {
       throw new TypeError(`params names must satisfy ${nameRegex}`);
     }
-    // Convert Numbers into Numeric Strings
+    // Convert Numbers into Numeric Strings and Buffers into B64 encoded strings.
     pk.forEach(k => {
-      opts.params[k] =
-        typeof opts.params[k] === 'number'
-          ? opts.params[k].toString()
-          : opts.params[k];
+      if (typeof opts.params[k] === 'number') {
+        opts.params[k] = opts.params[k].toString();
+      } else if (Buffer.isBuffer(opts.params[k])) {
+        opts.params[k] = opts.params[k].toString('base64').split('=')[0];
+      }
     });
     const pv = objectValues(opts.params);
     if (!pv.every(v => typeof v === 'string')) {

@@ -1,6 +1,7 @@
 import test from 'ava';
 
 import sdData from './fixtures/serialize-deserialize';
+import sData from './fixtures/serialize-only';
 
 import m from '..';
 
@@ -8,6 +9,8 @@ test('should serialize correct phc objects', t => {
   sdData.deserialized.forEach((g, i) => {
     t.deepEqual(m.serialize(sdData.deserialized[i]), sdData.serialized[i]);
   });
+  sData.deserialized.forEach((g, i) => {
+    t.deepEqual(m.serialize(sData.deserialized[i]), sData.serialized[i]);
   });
 });
 
