@@ -49,7 +49,7 @@ test('should thow errors if trying to serialize with invalid arguments', async t
       id: 'pbkdf2',
       params: {rounds: '1000'},
       salt: Buffer.from('string'),
-      hash: 'string',
+      hash: 'string'
     })
   );
   t.is(err.message, 'hash must be a Buffer');

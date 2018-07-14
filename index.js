@@ -1,4 +1,4 @@
-/* eslint-disable max-params,capitalized-comments,complexity */
+/* eslint-disable max-params,capitalized-comments,complexity,prefer-destructuring */
 'use strict';
 
 const Buffer = require('safe-buffer').Buffer;
@@ -212,5 +212,5 @@ function deserialize(phcstr) {
 
 module.exports = {
   serialize,
-  deserialize,
+  deserialize
 };
