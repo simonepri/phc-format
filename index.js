@@ -76,7 +76,7 @@ function serialize(opts) {
   }
 
   // Parameters Validation
-  if (typeof opts.params !== 'undefined' && typeof opts.raw === 'undefined') {
+  if (typeof opts.params !== 'undefined') {
     if (typeof opts.params !== 'object' || opts.params === null) {
       throw new TypeError('params must be an object');
     }
