@@ -83,7 +83,7 @@
 </p>
 
 ## Motivation
-The [PHC String Format][specs:phc] is an attempt to specify a common hash string format that’s a restricted & well defined subset of the Modular Crypt Format. New hashes are strongly encouraged to adhere to the PHC specification, rather than the much looser [Modular Crypt Format][specs:mcf].
+The [PHC String Format][specs:phc] is an attempt to specify a common hash string format that's a restricted & well defined subset of the Modular Crypt Format. New hashes are strongly encouraged to adhere to the PHC specification, rather than the much looser [Modular Crypt Format][specs:mcf].
 
 ## Install
 
