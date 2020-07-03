@@ -1,7 +1,7 @@
-import test from 'ava';
+const test = require('ava');
 
-import m from '..';
-import sdData from './fixtures/serialize-deserialize';
+const m = require('..');
+const sdData = require('./fixtures/serialize-deserialize');
 
 test('should deserialize correct phc strings', t => {
   sdData.serialized.forEach((g, i) => {

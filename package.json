@@ -30,7 +30,7 @@
     "index.js"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">=10"
   },
   "scripts": {
     "lint": "xo",
@@ -38,13 +38,11 @@
     "release": "npx np",
     "update": "npx npm-check -u"
   },
-  "dependencies": {
-    "safe-buffer": "^5.1.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "ava": "~0.25.0",
-    "nyc": "^11.6.0",
-    "xo": "~0.20.3"
+    "ava": "^3.9.0",
+    "nyc": "^15.1.0",
+    "xo": "~0.27.2"
   },
   "ava": {
     "verbose": true

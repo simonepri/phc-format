@@ -1,8 +1,3 @@
-/* eslint-disable max-params,capitalized-comments,complexity,prefer-destructuring */
-'use strict';
-
-const Buffer = require('safe-buffer').Buffer;
-
 const idRegex = /^[a-z0-9-]{1,32}$/;
 const nameRegex = /^[a-z0-9-]{1,32}$/;
 const valueRegex = /^[a-zA-Z0-9/+.-]+$/;
@@ -15,6 +10,7 @@ function objToKeyVal(obj) {
     .map(k => [k, obj[k]].join('='))
     .join(',');
 }
+
 function keyValtoObj(str) {
   const obj = {};
   str.split(',').forEach(ps => {
@@ -22,14 +18,17 @@ function keyValtoObj(str) {
     if (pss.length < 2) {
       throw new TypeError(`params must be in the format name=value`);
     }
+
     obj[pss.shift()] = pss.join('=');
   });
   return obj;
 }
+
 function objectKeys(object) {
   /* istanbul ignore next */
   return Object.keys(object);
 }
+
 function objectValues(object) {
   /* istanbul ignore next */
   if (typeof Object.values === 'function') return Object.values(object);
@@ -59,9 +58,11 @@ function serialize(opts) {
   if (typeof opts.id !== 'string') {
     throw new TypeError('id must be a string');
   }
+
   if (!idRegex.test(opts.id)) {
     throw new TypeError(`id must satisfy ${idRegex}`);
   }
+
   fields.push(opts.id);
 
   if (typeof opts.version !== 'undefined') {
@@ -72,6 +73,7 @@ function serialize(opts) {
     ) {
       throw new TypeError('version must be a positive integer number');
     }
+
     fields.push(`v=${opts.version}`);
   }
 
@@ -80,10 +82,12 @@ function serialize(opts) {
     if (typeof opts.params !== 'object' || opts.params === null) {
       throw new TypeError('params must be an object');
     }
+
     const pk = objectKeys(opts.params);
     if (!pk.every(p => nameRegex.test(p))) {
       throw new TypeError(`params names must satisfy ${nameRegex}`);
     }
+
     // Convert Numbers into Numeric Strings and Buffers into B64 encoded strings.
     pk.forEach(k => {
       if (typeof opts.params[k] === 'number') {
@@ -96,9 +100,11 @@ function serialize(opts) {
     if (!pv.every(v => typeof v === 'string')) {
       throw new TypeError('params values must be strings');
     }
+
     if (!pv.every(v => valueRegex.test(v))) {
       throw new TypeError(`params values must satisfy ${valueRegex}`);
     }
+
     const strpar = objToKeyVal(opts.params);
     fields.push(strpar);
   }
@@ -108,6 +114,7 @@ function serialize(opts) {
     if (!Buffer.isBuffer(opts.salt)) {
       throw new TypeError('salt must be a Buffer');
     }
+
     fields.push(opts.salt.toString('base64').split('=')[0]);
 
     if (typeof opts.hash !== 'undefined') {
@@ -115,6 +122,7 @@ function serialize(opts) {
       if (!Buffer.isBuffer(opts.hash)) {
         throw new TypeError('hash must be a Buffer');
       }
+
       fields.push(opts.hash.toString('base64').split('=')[0]);
     }
   }
@@ -134,9 +142,11 @@ function deserialize(phcstr) {
   if (typeof phcstr !== 'string' || phcstr === '') {
     throw new TypeError('pchstr must be a non-empty string');
   }
+
   if (phcstr[0] !== '$') {
     throw new TypeError('pchstr must contain a $ as first char');
   }
+
   const fields = phcstr.split('$');
   // Remove first empty $
   fields.shift();
@@ -184,10 +194,12 @@ function deserialize(phcstr) {
     if (!objectKeys(params).every(p => nameRegex.test(p))) {
       throw new TypeError(`params names must satisfy ${nameRegex}`);
     }
+
     const pv = objectValues(params);
     if (!pv.every(v => valueRegex.test(v))) {
       throw new TypeError(`params values must satisfy ${valueRegex}`);
     }
+
     const pk = objectKeys(params);
     // Convert Decimal Strings into Numbers
     pk.forEach(k => {
@@ -213,5 +225,5 @@ function deserialize(phcstr) {
 
 module.exports = {
   serialize,
-  deserialize,
+  deserialize
 };
