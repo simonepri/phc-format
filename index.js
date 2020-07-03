@@ -213,5 +213,5 @@ function deserialize(phcstr) {
 
 module.exports = {
   serialize,
-  deserialize
+  deserialize,
 };

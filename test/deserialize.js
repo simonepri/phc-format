@@ -1,8 +1,7 @@
 import test from 'ava';
 
-import sdData from './fixtures/serialize-deserialize';
-
 import m from '..';
+import sdData from './fixtures/serialize-deserialize';
 
 test('should deserialize correct phc strings', t => {
   sdData.serialized.forEach((g, i) => {

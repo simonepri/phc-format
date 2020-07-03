@@ -1,9 +1,8 @@
 import test from 'ava';
 
+import m from '..';
 import sdData from './fixtures/serialize-deserialize';
 import sData from './fixtures/serialize-only';
-
-import m from '..';
 
 test('should serialize correct phc objects', t => {
   sdData.deserialized.forEach((g, i) => {
@@ -53,7 +52,7 @@ test('should thow errors if trying to serialize with invalid arguments', async t
       id: 'pbkdf2',
       params: {rounds: '1000'},
       salt: Buffer.from('string'),
-      hash: 'string'
+      hash: 'string',
     })
   );
   t.is(err.message, 'hash must be a Buffer');
